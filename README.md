@@ -8,5 +8,5 @@ Crawler toolkit for the twisterverse analytics (alpha)
 `mysql-server`
 
 ### Crontab
-`* * * * * /usr/bin/php /path-to/twister-analytics-crawler/peer.php &> /dev/null`
+`* * * * * /usr/bin/php /path-to/twister-analytics-crawler/peer.php &> /dev/null`  
 `0 0 * * * /usr/bin/php /path-to/twister-analytics-crawler/tor.php &> /dev/null`

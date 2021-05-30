@@ -83,10 +83,17 @@ if ($peers = $curlPeer->getAll()) {
 
           // Update online time
           $modelIp->addOnline($ipId,
-                              $peer['startingheight'],
-                              $peer['conntime'],
-                              $peer['lastsend'],
-                              $peer['lastrecv']);
+                              (int) $peer['startingheight'],
+                              (int) $peer['conntime'],
+                              (int) $peer['lastsend'],
+                              (int) $peer['lastrecv'],
+                              (int) $peer['bytessent'],
+                              (int) $peer['bytesrecv'],
+                              (int) $peer['banscore'],
+                              (int) $peer['inbound'],
+                              (int) $peer['version'],
+                              preg_replace('/[^\d]/', '', $peer['subver']),
+                              (isset($peer['syncnode']) ? (int) $peer['syncnode'] : 0));
         } else {
           $modelLog->add(_('Could not extract peer address or port'));
         }

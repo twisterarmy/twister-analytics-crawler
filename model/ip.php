@@ -82,7 +82,18 @@ class ModelIp extends Model {
         }
     }
 
-    public function addOnline($ipId, $startingHeight, $timeConnection, $timeLastSend, $timeLastReceive) {
+    public function addOnline($ipId,
+                              $startingHeight,
+                              $timeConnection,
+                              $timeLastSend,
+                              $timeLastReceive,
+                              $bytesSent,
+                              $bytesReceive,
+                              $banscore,
+                              $inbound,
+                              $version,
+                              $subVersion,
+                              $syncNode) {
 
         try {
 
@@ -91,10 +102,28 @@ class ModelIp extends Model {
                                                                     `timeConnection`  = ?,
                                                                     `timeLastSend`    = ?,
                                                                     `timeLastReceive` = ?,
+                                                                    `bytesSent`       = ?,
+                                                                    `bytesReceive`    = ?,
+                                                                    `banscore`        = ?,
+                                                                    `inbound`         = ?,
+                                                                    `version`         = ?,
+                                                                    `subVersion`      = ?,
+                                                                    `syncNode`        = ?,
 
                                                                     `timeAdded` = UNIX_TIMESTAMP()');
 
-            $query->execute([$ipId, $startingHeight, $timeConnection, $timeLastSend, $timeLastReceive]);
+            $query->execute([ $ipId,
+                              $startingHeight,
+                              $timeConnection,
+                              $timeLastSend,
+                              $timeLastReceive,
+                              $bytesSent,
+                              $bytesReceive,
+                              $banscore,
+                              $inbound,
+                              $version,
+                              $subVersion,
+                              $syncNode]);
 
             return $this->db->lastInsertId();
 

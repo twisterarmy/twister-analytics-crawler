@@ -93,6 +93,7 @@ if ($peers = $curlPeer->getAll()) {
                               (int) $peer['inbound'],
                               (int) $peer['version'],
                               preg_replace('/[^\d]/', '', $peer['subver']),
+                              crc32($peer['subver']),
                               (isset($peer['syncnode']) ? (int) $peer['syncnode'] : 0));
         } else {
           $modelLog->add(_('Could not extract peer address or port'));

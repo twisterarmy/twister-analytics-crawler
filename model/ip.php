@@ -93,6 +93,7 @@ class ModelIp extends Model {
                               $inbound,
                               $version,
                               $subVersion,
+                              $subVersionCRC32,
                               $syncNode) {
 
         try {
@@ -108,6 +109,7 @@ class ModelIp extends Model {
                                                                     `inbound`         = ?,
                                                                     `version`         = ?,
                                                                     `subVersion`      = ?,
+                                                                    `subVersionCRC32` = ?,
                                                                     `syncNode`        = ?,
 
                                                                     `timeAdded` = UNIX_TIMESTAMP()');
@@ -123,6 +125,7 @@ class ModelIp extends Model {
                               $inbound,
                               $version,
                               $subVersion,
+                              $subVersionCRC32,
                               $syncNode]);
 
             return $this->db->lastInsertId();

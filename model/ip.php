@@ -109,7 +109,7 @@ class ModelIp extends Model {
                                                                     `inbound`         = ?,
                                                                     `version`         = ?,
                                                                     `subVersion`      = ?,
-                                                                    `subVersionCRC32` = ?,
+                                                                    `subVersionCRC32` = CRC32(?),
                                                                     `syncNode`        = ?,
 
                                                                     `timeAdded` = UNIX_TIMESTAMP()');

@@ -5,6 +5,7 @@ require(__DIR__ . '/config.php');
 require(__DIR__ . '/curl/curl.php');
 require(__DIR__ . '/curl/peer.php');
 require(__DIR__ . '/curl/geoplugin.php');
+require(__DIR__ . '/curl/torproject.php');
 
 require(__DIR__ . '/model/model.php');
 require(__DIR__ . '/model/ip.php');
@@ -12,6 +13,7 @@ require(__DIR__ . '/model/log.php');
 
 $curlPeer       = new CurlPeer(TWISTER_PROTOCOL, TWISTER_HOST, TWISTER_PORT, TWISTER_USERNAME, TWISTER_PASSWORD);
 $curlGeoPlugin  = new CurlGeoPlugin(GEOPLUGIN_PROTOCOL, GEOPLUGIN_HOST, GEOPLUGIN_PORT);
+$curlTorProject = new CurlTorProject(TORPROJECT_PROTOCOL, TORPROJECT_HOST, TORPROJECT_PORT);
 
 $modelIp        = new ModelIp(DB_DATABASE, DB_HOSTNAME, DB_PORT, DB_USERNAME, DB_PASSWORD);
 $modelLog       = new ModelLog(DB_DATABASE, DB_HOSTNAME, DB_PORT, DB_USERNAME, DB_PASSWORD);
@@ -54,6 +56,17 @@ if ($peers = $curlPeer->getAll()) {
 
             // Save IP
             $ipId = $modelIp->add($matches[1], $matches[2]);
+
+            // Detect TOR exit node
+            if ($torProjectExitNodes = $curlTorProject->getExitNodes()) {
+
+              if (in_array($matches[1], $torProjectExitNodes)) {
+                $modelIp->setIsTOR($ipId);
+              }
+
+            } else {
+              $modelLog->add(_('Could not parse TorProject response'));
+            }
 
             // Get geo info
             if ($location = $curlGeoPlugin->getLocation($matches[1])) {
